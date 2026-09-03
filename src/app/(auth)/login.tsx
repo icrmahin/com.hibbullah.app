@@ -2,12 +2,14 @@ import { router } from "expo-router";
 import { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Button from "../../components/common/Button";
 import AppLogo from "../../components/common/AppLogo";
+import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import colors from "../../constants/colors";
 import spacing from "../../constants/spacing";
 import typography from "../../constants/typography";
+import { useAuth } from "../../hooks/useAuth";
+import { normalizeError } from "../../utils/errorHandling";
 import { isEmpty, isValidEmail } from "../../utils/validation";
 
 export default function LoginScreen() {
@@ -15,8 +17,9 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("password123");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (isEmpty(email) || !isValidEmail(email)) {
       setError("Enter a valid email address.");
       return;
@@ -28,10 +31,16 @@ export default function LoginScreen() {
 
     setError("");
     setLoading(true);
-    setTimeout(() => {
+    try {
+      const session = await login({ email, password });
+      router.replace(
+        session.role === "admin" ? "/(admin)" : "/(customer)/(tabs)",
+      );
+    } catch (nextError) {
+      setError(normalizeError(nextError).message);
+    } finally {
       setLoading(false);
-      router.replace("/(customer)/(tabs)");
-    }, 500);
+    }
   };
 
   return (

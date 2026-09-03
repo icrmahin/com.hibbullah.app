@@ -19,14 +19,24 @@ export default function CartItemRow({
 }) {
   return (
     <View style={styles.row}>
-      <ProductImage uri={item.product.image} recyclingKey={item.id} style={styles.image} />
+      <ProductImage
+        uri={item.product.image}
+        recyclingKey={item.id}
+        style={styles.image}
+      />
       <View style={styles.info}>
         <Text style={styles.name}>{item.product.name}</Text>
         <Text style={styles.meta}>{formatCurrency(item.product.price)}</Text>
-        <QuantitySelector value={item.quantity} onChange={onQuantity} />
+        <QuantitySelector
+          value={item.quantity}
+          onChange={onQuantity}
+          max={item.product.stock}
+        />
       </View>
       <View style={styles.aside}>
-        <Text style={styles.price}>{formatCurrency(item.product.price * item.quantity)}</Text>
+        <Text style={styles.price}>
+          {formatCurrency(item.product.price * item.quantity)}
+        </Text>
         <Pressable onPress={onRemove} hitSlop={8}>
           <Text style={styles.remove}>Remove</Text>
         </Pressable>
@@ -51,5 +61,9 @@ const styles = StyleSheet.create({
   meta: { color: colors.textMuted, fontSize: typography.caption },
   aside: { alignItems: "flex-end", justifyContent: "space-between" },
   price: { color: colors.text, fontWeight: "600" },
-  remove: { color: colors.danger, fontSize: typography.caption, fontWeight: "600" },
+  remove: {
+    color: colors.danger,
+    fontSize: typography.caption,
+    fontWeight: "600",
+  },
 });

@@ -1,7 +1,10 @@
 import { router } from "expo-router";
+import { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import CartItemRow from "../../../components/cart/CartItem";
 import Button from "../../../components/common/Button";
+import EmptyState from "../../../components/common/EmptyState";
 import Header from "../../../components/common/Header";
 import LoadingState from "../../../components/common/LoadingState";
 import colors from "../../../constants/colors";
@@ -9,9 +12,36 @@ import spacing from "../../../constants/spacing";
 import typography from "../../../constants/typography";
 import { useCart } from "../../../hooks/useCart";
 import { formatCurrency } from "../../../utils/currency";
+import { normalizeError } from "../../../utils/errorHandling";
 
 export default function CustomerCartScreen() {
-  const { items, summary, loading } = useCart();
+  const { items, summary, loading, setQuantity, removeItem } = useCart();
+  const [error, setError] = useState<string | null>(null);
+  const [updating, setUpdating] = useState(false);
+
+  const updateQuantity = async (itemId: string, quantity: number) => {
+    setUpdating(true);
+    setError(null);
+    try {
+      await setQuantity(itemId, quantity);
+    } catch (nextError) {
+      setError(normalizeError(nextError).message);
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const removeCartItem = async (itemId: string) => {
+    setUpdating(true);
+    setError(null);
+    try {
+      await removeItem(itemId);
+    } catch (nextError) {
+      setError(normalizeError(nextError).message);
+    } finally {
+      setUpdating(false);
+    }
+  };
 
   if (loading) return <LoadingState label="Loading your cart" />;
 
@@ -19,22 +49,22 @@ export default function CustomerCartScreen() {
     <SafeAreaView style={styles.safeArea}>
       <Header title="Cart" subtitle="Review and checkout your items" />
       <ScrollView contentContainerStyle={styles.container}>
+        {error ? <Text style={styles.error}>{error}</Text> : null}
         {items.length === 0 ? (
-          <Text style={styles.empty}>Your cart is empty.</Text>
+          <EmptyState
+            title="Your cart is empty"
+            message="Add medicines from the product catalogue to begin."
+            actionLabel="Browse products"
+            onAction={() => router.push("/(customer)/(tabs)/products")}
+          />
         ) : (
           items.map((item) => (
-            <View key={item.id} style={styles.itemRow}>
-              <View style={styles.image} />
-              <View style={styles.itemInfo}>
-                <Text style={styles.name}>{item.product.name}</Text>
-                <Text style={styles.meta}>
-                  {item.quantity} x {formatCurrency(item.product.price)}
-                </Text>
-              </View>
-              <Text style={styles.price}>
-                {formatCurrency(item.product.price * item.quantity)}
-              </Text>
-            </View>
+            <CartItemRow
+              key={item.id}
+              item={item}
+              onQuantity={(quantity) => updateQuantity(item.id, quantity)}
+              onRemove={() => removeCartItem(item.id)}
+            />
           ))
         )}
 
@@ -69,6 +99,7 @@ export default function CustomerCartScreen() {
           <Button
             title="Proceed to checkout"
             onPress={() => router.push("/(customer)/checkout")}
+            disabled={items.length === 0 || updating}
             fullWidth
           />
         </View>
@@ -84,26 +115,7 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xxl,
     gap: spacing.lg,
   },
-  empty: { color: colors.textMuted, fontSize: typography.bodySmall },
-  itemRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: colors.backgroundAlt,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.md,
-  },
-  image: {
-    width: 52,
-    height: 52,
-    borderRadius: 12,
-    backgroundColor: colors.primarySoft,
-  },
-  itemInfo: { flex: 1, marginLeft: spacing.md },
-  name: { color: colors.text, fontWeight: "700" },
-  meta: { color: colors.textMuted, fontSize: typography.caption },
-  price: { color: colors.text, fontWeight: "700" },
+  error: { color: colors.danger, fontSize: typography.bodySmall },
   summaryBox: {
     backgroundColor: colors.backgroundAlt,
     borderRadius: 16,

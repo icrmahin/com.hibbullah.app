@@ -1,6 +1,13 @@
-import { Stack } from 'expo-router';
+import { Redirect, Stack } from "expo-router";
+import LoadingState from "../../components/common/LoadingState";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function AdminLayout() {
+  const { session, loading } = useAuth();
+  if (loading) return <LoadingState label="Loading admin account" />;
+  if (!session) return <Redirect href="/(auth)/login" />;
+  if (session.role !== "admin") return <Redirect href="/(customer)/(tabs)" />;
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
