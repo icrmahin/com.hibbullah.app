@@ -12,7 +12,12 @@ type HeaderProps = {
   onBack?: () => void;
 };
 
-export default function Header({ title, subtitle, rightAction, onBack }: HeaderProps) {
+export default function Header({
+  title,
+  subtitle,
+  rightAction,
+  onBack,
+}: HeaderProps) {
   const insets = useSafeAreaInsets();
 
   return (
@@ -47,11 +52,16 @@ export default function Header({ title, subtitle, rightAction, onBack }: HeaderP
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.black,
+    backgroundColor: colors.backgroundAlt,
     paddingBottom: spacing.md,
     paddingHorizontal: spacing.lg,
   },
-  row: { flexDirection: "row", alignItems: "center", gap: spacing.md, minHeight: 44 },
+  row: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: spacing.md,
+    minHeight: 44,
+  },
   backButton: {
     width: sizes.touch,
     height: sizes.touch,
@@ -59,14 +69,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  backText: { fontSize: 32, color: colors.white, lineHeight: 34, marginTop: -2 },
+  backText: {
+    fontSize: 32,
+    color: colors.primary,
+    lineHeight: 34,
+    marginTop: -2,
+  },
   titleArea: { flex: 1 },
   title: {
-    color: colors.white,
+    color: colors.text,
     fontSize: typography.h3,
     fontWeight: "600",
     letterSpacing: typography.letterSpacingBody,
   },
-  subtitle: { color: "#CCCCCC", fontSize: typography.caption, marginTop: 2 },
+  subtitle: {
+    color: colors.textMuted,
+    fontSize: typography.caption,
+    marginTop: 2,
+  },
   action: { alignItems: "center", justifyContent: "center" },
 });

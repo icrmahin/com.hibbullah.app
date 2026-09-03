@@ -27,9 +27,9 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#023719",
+          "backgroundColor": "#FFFFFF",
           "image": "./assets/images/logo/hibbullah-logo.png",
-          "imageWidth": 76
+          "imageWidth": 88
         }
       ],
       "expo-image",

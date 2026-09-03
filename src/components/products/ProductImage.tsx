@@ -14,9 +14,12 @@ type ProductImageProps = {
 function ProductImage({ uri, recyclingKey, style }: ProductImageProps) {
   return (
     <Image
+      // Remote URLs are temporary seed data; Expo Image handles cache reuse and recycling.
       source={uri ? { uri } : placeholder}
       placeholder={placeholder}
       recyclingKey={recyclingKey}
+      cachePolicy="memory-disk"
+      priority="low"
       contentFit="cover"
       transition={recyclingKey ? 0 : 180}
       style={[styles.image, style]}

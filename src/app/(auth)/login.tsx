@@ -1,7 +1,9 @@
 import { router } from "expo-router";
 import { useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../components/common/Button";
+import AppLogo from "../../components/common/AppLogo";
 import Input from "../../components/common/Input";
 import colors from "../../constants/colors";
 import spacing from "../../constants/spacing";
@@ -35,6 +37,7 @@ export default function LoginScreen() {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
+        <AppLogo size={72} />
         <Text style={styles.title}>Welcome back</Text>
         <Text style={styles.subtitle}>
           Sign in to continue with your orders and care plan.

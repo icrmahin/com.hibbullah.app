@@ -70,18 +70,7 @@ export default function CustomerTabsLayout() {
       <Tabs.Screen
         name="cart"
         options={{
-          title: "Cart",
-          tabBarIcon: ({ color }) => (
-            <SymbolView
-              name={{
-                ios: "bag.fill",
-                android: "shopping_bag",
-                web: "shopping_bag",
-              }}
-              tintColor={color}
-              size={22}
-            />
-          ),
+          href: null,
         }}
       />
       <Tabs.Screen

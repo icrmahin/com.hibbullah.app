@@ -10,6 +10,8 @@ type SearchBarProps = {
   onChangeText: (text: string) => void;
   placeholder?: string;
   onSubmit?: () => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
 };
 
 export default function SearchBar({
@@ -17,6 +19,8 @@ export default function SearchBar({
   onChangeText,
   placeholder = "Search products",
   onSubmit,
+  onFocus,
+  onBlur,
 }: SearchBarProps) {
   return (
     <View style={styles.wrapper}>
@@ -32,6 +36,8 @@ export default function SearchBar({
         placeholder={placeholder}
         placeholderTextColor={colors.textMuted}
         onSubmitEditing={onSubmit}
+        onFocus={onFocus}
+        onBlur={onBlur}
         returnKeyType="search"
         style={styles.input}
       />

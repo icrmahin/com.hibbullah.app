@@ -1,4 +1,3 @@
-import type { Address, User } from "../types/user";
 import type { AuditEntry } from "../types/audit";
 import type { CartItem } from "../types/cart";
 import type { Category } from "../types/category";
@@ -9,6 +8,7 @@ import type { NotificationItem } from "../types/notification";
 import type { Order } from "../types/order";
 import type { Product } from "../types/product";
 import type { ReturnRequest } from "../types/return";
+import type { Address, User } from "../types/user";
 
 export type CustomerRecord = {
   id: string;
@@ -53,6 +53,8 @@ const seedProducts: Product[] = [
     discountPercent: 17,
     stock: 42,
     unit: "packet",
+    image:
+      "https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80",
     isActive: true,
     isFeatured: true,
     batchNumber: "PAR-1024",
@@ -72,6 +74,8 @@ const seedProducts: Product[] = [
     discountPercent: 16,
     stock: 26,
     unit: "bottle",
+    image:
+      "https://images.unsplash.com/photo-1550572017-edd951b55104?auto=format&fit=crop&w=600&q=80",
     isActive: true,
     isFeatured: true,
     batchNumber: "VIT-1148",
@@ -85,12 +89,15 @@ const seedProducts: Product[] = [
     genericName: "Amoxicillin",
     manufacturerId: "m-3",
     categoryId: "cat-3",
-    description: "Broad-spectrum antibiotic used to treat bacterial infections.",
+    description:
+      "Broad-spectrum antibiotic used to treat bacterial infections.",
     price: 420,
     originalPrice: 470,
     discountPercent: 11,
     stock: 9,
     unit: "pack",
+    image:
+      "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=600&q=80",
     isActive: true,
     batchNumber: "AMX-732",
     expiryDate: "2026-11-08T00:00:00.000Z",
@@ -103,12 +110,15 @@ const seedProducts: Product[] = [
     genericName: "Chlorhexidine",
     manufacturerId: "m-4",
     categoryId: "cat-4",
-    description: "Gentle skin protection cream for cuts, scrapes, and minor irritations.",
+    description:
+      "Gentle skin protection cream for cuts, scrapes, and minor irritations.",
     price: 225,
     originalPrice: 260,
     discountPercent: 13,
     stock: 18,
     unit: "tube",
+    image:
+      "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80",
     isActive: true,
     batchNumber: "SKN-903",
     expiryDate: "2027-09-20T00:00:00.000Z",
@@ -121,12 +131,15 @@ const seedProducts: Product[] = [
     genericName: "Emergency Care Kit",
     manufacturerId: "m-1",
     categoryId: "cat-5",
-    description: "Home first aid kit with dressings, bandages, and antiseptic wipes.",
+    description:
+      "Home first aid kit with dressings, bandages, and antiseptic wipes.",
     price: 760,
     originalPrice: 820,
     discountPercent: 7,
     stock: 5,
     unit: "kit",
+    image:
+      "https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=600&q=80",
     isActive: true,
     batchNumber: "FIR-118",
     expiryDate: "2026-03-15T00:00:00.000Z",
@@ -139,12 +152,15 @@ const seedProducts: Product[] = [
     genericName: "Ibuprofen",
     manufacturerId: "m-2",
     categoryId: "cat-1",
-    description: "Anti-inflammatory medication for pain relief and fever reduction.",
+    description:
+      "Anti-inflammatory medication for pain relief and fever reduction.",
     price: 210,
     originalPrice: 240,
     discountPercent: 12,
     stock: 31,
     unit: "pack",
+    image:
+      "https://images.unsplash.com/photo-1471864190281-a93a3070b6de?auto=format&fit=crop&w=600&q=80",
     isActive: true,
     isFeatured: true,
     batchNumber: "IBU-102",
@@ -195,11 +211,41 @@ export function createSeedStore(): AppStore {
       },
     ],
     categories: [
-      { id: "cat-1", name: "Pain Relief", slug: "pain-relief", description: "Fever and body pain", productCount: 2 },
-      { id: "cat-2", name: "Vitamins", slug: "vitamins", description: "Daily wellness support", productCount: 1 },
-      { id: "cat-3", name: "Antibiotics", slug: "antibiotics", description: "Prescription support", productCount: 1 },
-      { id: "cat-4", name: "Skin Care", slug: "skin-care", description: "Dermatology care", productCount: 1 },
-      { id: "cat-5", name: "First Aid", slug: "first-aid", description: "Emergency essentials", productCount: 1 },
+      {
+        id: "cat-1",
+        name: "Pain Relief",
+        slug: "pain-relief",
+        description: "Fever and body pain",
+        productCount: 2,
+      },
+      {
+        id: "cat-2",
+        name: "Vitamins",
+        slug: "vitamins",
+        description: "Daily wellness support",
+        productCount: 1,
+      },
+      {
+        id: "cat-3",
+        name: "Antibiotics",
+        slug: "antibiotics",
+        description: "Prescription support",
+        productCount: 1,
+      },
+      {
+        id: "cat-4",
+        name: "Skin Care",
+        slug: "skin-care",
+        description: "Dermatology care",
+        productCount: 1,
+      },
+      {
+        id: "cat-5",
+        name: "First Aid",
+        slug: "first-aid",
+        description: "Emergency essentials",
+        productCount: 1,
+      },
     ],
     manufacturers: [
       { id: "m-1", name: "Nairobi Pharma", country: "Kenya", productCount: 2 },
@@ -247,8 +293,16 @@ export function createSeedStore(): AppStore {
           },
         ],
         timeline: [
-          { label: "Placed", time: "2026-08-30 09:00", note: "Customer submitted order" },
-          { label: "Pending", time: "2026-08-30 09:05", note: "Waiting for admin review" },
+          {
+            label: "Placed",
+            time: "2026-08-30 09:00",
+            note: "Customer submitted order",
+          },
+          {
+            label: "Pending",
+            time: "2026-08-30 09:05",
+            note: "Waiting for admin review",
+          },
         ],
       },
       {
@@ -276,8 +330,16 @@ export function createSeedStore(): AppStore {
           },
         ],
         timeline: [
-          { label: "Confirmed", time: "2026-08-28 17:00", note: "Order approved by admin" },
-          { label: "Delivered", time: "2026-08-29 11:30", note: "Cash on delivery completed" },
+          {
+            label: "Confirmed",
+            time: "2026-08-28 17:00",
+            note: "Order approved by admin",
+          },
+          {
+            label: "Delivered",
+            time: "2026-08-29 11:30",
+            note: "Cash on delivery completed",
+          },
         ],
       },
     ],

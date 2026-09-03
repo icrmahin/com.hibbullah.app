@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../../components/common/Button";
+import AppLogo from "../../components/common/AppLogo";
 import colors from "../../constants/colors";
 import spacing from "../../constants/spacing";
 import typography from "../../constants/typography";
@@ -19,9 +20,7 @@ export default function WelcomeScreen() {
     <SafeAreaView style={styles.safeArea}>
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.brandWrap}>
-          <View style={styles.logo}>
-            <Text style={styles.logoText}>H</Text>
-          </View>
+          <AppLogo size={88} />
           <Text style={styles.brand}>Hibbullah</Text>
         </View>
 
@@ -66,16 +65,7 @@ const styles = StyleSheet.create({
     gap: spacing.xxl,
   },
   brandWrap: { alignItems: "center", gap: spacing.md },
-  logo: {
-    width: 88,
-    height: 88,
-    borderRadius: 24,
-    backgroundColor: colors.primary,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  logoText: { color: colors.white, fontSize: 36, fontWeight: "800" },
-  brand: { color: colors.text, fontSize: typography.h1, fontWeight: "700" },
+  brand: { color: colors.text, fontSize: typography.h3, fontWeight: "600" },
   hero: { gap: spacing.md },
   title: {
     color: colors.text,
