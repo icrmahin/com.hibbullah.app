@@ -1,9 +1,11 @@
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AdminHeader from "../../../components/admin/AdminHeader";
+import AdminProductCard from "../../../components/admin/AdminProductCard";
 import Button from "../../../components/common/Button";
+import EmptyState from "../../../components/common/EmptyState";
 import LoadingState from "../../../components/common/LoadingState";
 import SearchBar from "../../../components/common/SearchBar";
 import colors from "../../../constants/colors";
@@ -47,26 +49,27 @@ export default function AdminProductsScreen() {
           onChangeText={setQuery}
           placeholder="Search products"
         />
-        {filtered.map((product) => (
-          <View key={product.id} style={styles.row}>
-            <View style={styles.image} />
-            <View style={styles.textBlock}>
-              <Text style={styles.name}>{product.name}</Text>
-              <Text style={styles.meta}>{product.stock} in stock</Text>
-            </View>
-            <Text
-              style={styles.link}
-              onPress={() =>
+        {filtered.length === 0 ? (
+          <EmptyState
+            title="No products found"
+            message="Try a different name or add a new product."
+            actionLabel="Add product"
+            onAction={() => router.push("/(admin)/products/add")}
+          />
+        ) : (
+          filtered.map((product) => (
+            <AdminProductCard
+              key={product.id}
+              product={product}
+              onPress={(item) =>
                 router.push({
                   pathname: "/(admin)/products/[productId]",
-                  params: { productId: product.id },
+                  params: { productId: item.id },
                 })
               }
-            >
-              Edit
-            </Text>
-          </View>
-        ))}
+            />
+          ))
+        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -79,23 +82,4 @@ const styles = StyleSheet.create({
     gap: spacing.md,
     paddingBottom: spacing.xxl,
   },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: colors.backgroundAlt,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.md,
-  },
-  image: {
-    width: 52,
-    height: 52,
-    borderRadius: 12,
-    backgroundColor: colors.primarySoft,
-  },
-  textBlock: { flex: 1, marginLeft: spacing.md },
-  name: { color: colors.text, fontWeight: "700" },
-  meta: { color: colors.textMuted, fontSize: 12 },
-  link: { color: colors.primary, fontWeight: "700" },
 });

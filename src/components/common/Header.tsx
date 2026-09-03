@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { SymbolView } from "expo-symbols";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "../../constants/colors";
 import sizes from "../../constants/sizes";
@@ -31,7 +32,11 @@ export default function Header({
             accessibilityLabel="Go back"
             hitSlop={8}
           >
-            <Text style={styles.backText}>‹</Text>
+            <SymbolView
+              name={{ ios: "chevron.left", android: "arrow_back", web: "arrow_back" }}
+              tintColor={colors.primary}
+              size={21}
+            />
           </Pressable>
         ) : null}
         <View style={styles.titleArea}>
@@ -68,12 +73,6 @@ const styles = StyleSheet.create({
     borderRadius: sizes.pill,
     alignItems: "center",
     justifyContent: "center",
-  },
-  backText: {
-    fontSize: 32,
-    color: colors.primary,
-    lineHeight: 34,
-    marginTop: -2,
   },
   titleArea: { flex: 1 },
   title: {

@@ -2,6 +2,7 @@ import { router } from "expo-router";
 import { useMemo, useState } from "react";
 import {
   FlatList,
+  Pressable,
   ScrollView,
   StyleSheet,
   Text,
@@ -72,23 +73,25 @@ export default function CustomerProductsScreen() {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.chipsRow}
             >
-              <Text
+              <Pressable
                 style={[styles.chip, !categoryId && styles.chipSelected]}
+                accessibilityRole="button"
                 onPress={() => setCategoryId(null)}
               >
-                All
-              </Text>
+                <Text style={[styles.chipText, !categoryId && styles.chipSelectedText]}>All</Text>
+              </Pressable>
               {mockCategories.map((category) => (
-                <Text
+                <Pressable
                   key={category.id}
                   style={[
                     styles.chip,
                     categoryId === category.id && styles.chipSelected,
                   ]}
+                  accessibilityRole="button"
                   onPress={() => setCategoryId(category.id)}
                 >
-                  {category.name}
-                </Text>
+                  <Text style={[styles.chipText, categoryId === category.id && styles.chipSelectedText]}>{category.name}</Text>
+                </Pressable>
               ))}
             </ScrollView>
 
@@ -98,23 +101,25 @@ export default function CustomerProductsScreen() {
               showsHorizontalScrollIndicator={false}
               contentContainerStyle={styles.chipsRow}
             >
-              <Text
+              <Pressable
                 style={[styles.chip, !manufacturerId && styles.chipSelected]}
+                accessibilityRole="button"
                 onPress={() => setManufacturerId(null)}
               >
-                All
-              </Text>
+                <Text style={[styles.chipText, !manufacturerId && styles.chipSelectedText]}>All</Text>
+              </Pressable>
               {mockManufacturers.map((manufacturer) => (
-                <Text
+                <Pressable
                   key={manufacturer.id}
                   style={[
                     styles.chip,
                     manufacturerId === manufacturer.id && styles.chipSelected,
                   ]}
+                  accessibilityRole="button"
                   onPress={() => setManufacturerId(manufacturer.id)}
                 >
-                  {manufacturer.name}
-                </Text>
+                  <Text style={[styles.chipText, manufacturerId === manufacturer.id && styles.chipSelectedText]}>{manufacturer.name}</Text>
+                </Pressable>
               ))}
             </ScrollView>
 
@@ -149,17 +154,17 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundAlt,
     borderColor: colors.border,
     borderWidth: 1,
-    borderRadius: 999,
+    borderRadius: 12,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
-    color: colors.text,
     marginRight: spacing.sm,
   },
+  chipText: { color: colors.text, fontWeight: "600" },
   chipSelected: {
     backgroundColor: colors.primarySoft,
     borderColor: colors.primary,
-    color: colors.primary,
   },
+  chipSelectedText: { color: colors.primary },
   resultText: {
     color: colors.textMuted,
     fontSize: typography.caption,

@@ -1,6 +1,6 @@
 export const sizes = {
-  borderRadius: 11,
-  cardRadius: 18,
+  borderRadius: 12,
+  cardRadius: 12,
   pill: 999,
   buttonHeight: 48,
   inputHeight: 48,

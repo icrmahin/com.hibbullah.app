@@ -7,8 +7,8 @@ export const typography = {
   bodySmall: 14,
   caption: 12,
   label: 11,
-  letterSpacingDisplay: -0.37,
-  letterSpacingBody: -0.37,
+  letterSpacingDisplay: 0,
+  letterSpacingBody: 0,
 };
 
 export default typography;

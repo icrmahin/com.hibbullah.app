@@ -3,7 +3,9 @@ import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import AdminHeader from "../../components/admin/AdminHeader";
+import AdminStatCard from "../../components/admin/AdminStatCard";
 import Button from "../../components/common/Button";
+import EmptyState from "../../components/common/EmptyState";
 import LoadingState from "../../components/common/LoadingState";
 import StatusBadge from "../../components/common/StatusBadge";
 import colors from "../../constants/colors";
@@ -44,44 +46,54 @@ export default function AdminDashboardScreen() {
       />
       <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.grid}>
-          <View style={styles.statCard}>
-            <Text style={styles.statLabel}>Pending orders</Text>
-            <Text style={styles.statValue}>{pendingOrders}</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statLabel}>Today sales</Text>
-            <Text style={styles.statValue}>{formatCurrency(todaySales)}</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statLabel}>Active cycles</Text>
-            <Text style={styles.statValue}>2</Text>
-          </View>
-          <View style={styles.statCard}>
-            <Text style={styles.statLabel}>Low-stock</Text>
-            <Text style={styles.statValue}>{lowStock}</Text>
-          </View>
+          <AdminStatCard
+            label="Pending orders"
+            value={pendingOrders}
+            detail="Needs review"
+            accent="gold"
+          />
+          <AdminStatCard
+            label="Today sales"
+            value={formatCurrency(todaySales)}
+            detail="All demo orders"
+            accent="green"
+          />
+          <AdminStatCard label="Active cycles" value={2} detail="In progress" />
+          <AdminStatCard
+            label="Low stock"
+            value={lowStock}
+            detail="Needs attention"
+            accent="gold"
+          />
         </View>
 
         <View style={styles.sectionBox}>
           <Text style={styles.sectionTitle}>Recent orders</Text>
-          {mockOrders.map((order) => (
-            <View key={order.id} style={styles.listRow}>
-              <View>
-                <Text style={styles.listTitle}>{order.orderNumber}</Text>
-                <Text style={styles.listMeta}>{order.customerName}</Text>
+          {mockOrders.length === 0 ? (
+            <EmptyState
+              title="No recent orders"
+              message="New customer orders will appear here."
+            />
+          ) : (
+            mockOrders.map((order) => (
+              <View key={order.id} style={styles.listRow}>
+                <View>
+                  <Text style={styles.listTitle}>{order.orderNumber}</Text>
+                  <Text style={styles.listMeta}>{order.customerName}</Text>
+                </View>
+                <StatusBadge
+                  label={order.status}
+                  tone={
+                    order.status === "DELIVERED"
+                      ? "success"
+                      : order.status === "PENDING"
+                        ? "warning"
+                        : "info"
+                  }
+                />
               </View>
-              <StatusBadge
-                label={order.status}
-                tone={
-                  order.status === "DELIVERED"
-                    ? "success"
-                    : order.status === "PENDING"
-                      ? "warning"
-                      : "info"
-                }
-              />
-            </View>
-          ))}
+            ))
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -101,24 +113,9 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     gap: spacing.md,
   },
-  statCard: {
-    width: "48%",
-    backgroundColor: colors.backgroundAlt,
-    borderRadius: 16,
-    borderWidth: 1,
-    borderColor: colors.border,
-    padding: spacing.lg,
-  },
-  statLabel: { color: colors.textMuted, fontSize: typography.caption },
-  statValue: {
-    color: colors.text,
-    fontSize: typography.h2,
-    fontWeight: "700",
-    marginTop: spacing.sm,
-  },
   sectionBox: {
     backgroundColor: colors.backgroundAlt,
-    borderRadius: 16,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: colors.border,
     padding: spacing.lg,

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { StyleSheet, Text, TextInput, View, type TextInputProps } from "react-native";
 import colors from "../../constants/colors";
 import sizes from "../../constants/sizes";
@@ -10,12 +11,22 @@ type InputProps = TextInputProps & {
 };
 
 export default function Input({ label, error, ...props }: InputProps) {
+  const [focused, setFocused] = useState(false);
+
   return (
     <View style={styles.wrapper}>
       {label ? <Text style={styles.label}>{label}</Text> : null}
       <TextInput
         {...props}
-        style={[styles.input, !!error && styles.inputError, props.multiline && styles.textArea]}
+        onFocus={(event) => {
+          setFocused(true);
+          props.onFocus?.(event);
+        }}
+        onBlur={(event) => {
+          setFocused(false);
+          props.onBlur?.(event);
+        }}
+        style={[styles.input, focused && styles.inputFocused, !!error && styles.inputError, props.multiline && styles.textArea, props.editable === false && styles.inputDisabled]}
         placeholderTextColor={colors.textMuted}
       />
       {error ? <Text style={styles.error}>{error}</Text> : null}
@@ -35,7 +46,7 @@ const styles = StyleSheet.create({
     minHeight: sizes.inputHeight,
     borderWidth: 1,
     borderColor: colors.hairline,
-    borderRadius: sizes.pill,
+    borderRadius: sizes.borderRadius,
     backgroundColor: colors.backgroundAlt,
     paddingHorizontal: spacing.lg,
     color: colors.text,
@@ -48,5 +59,7 @@ const styles = StyleSheet.create({
     paddingTop: spacing.lg,
   },
   inputError: { borderColor: colors.danger },
+  inputFocused: { borderColor: colors.primary, borderWidth: 2 },
+  inputDisabled: { backgroundColor: colors.background, color: colors.textMuted },
   error: { color: colors.danger, fontSize: typography.caption },
 });

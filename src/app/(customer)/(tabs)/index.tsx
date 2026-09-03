@@ -24,12 +24,14 @@ import {
   mockProducts,
 } from "../../../services/mockData";
 import type { Product } from "../../../types/product";
+import { useCart } from "../../../providers/CartProvider";
 
 export default function CustomerHomeScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [searchFocused, setSearchFocused] = useState(false);
+  const { itemCount } = useCart();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -98,7 +100,7 @@ export default function CustomerHomeScreen() {
               tintColor={colors.primary}
               size={23}
             />
-            <Text style={styles.cartCount}>2</Text>
+            {itemCount > 0 ? <Text style={styles.cartCount}>{itemCount > 99 ? "99+" : itemCount}</Text> : null}
           </Pressable>
         </View>
 
@@ -151,12 +153,13 @@ export default function CustomerHomeScreen() {
 
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Trending</Text>
-          <Text
-            style={styles.link}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="See all trending products"
             onPress={() => router.push("/(customer)/(tabs)/products")}
           >
-            See all
-          </Text>
+            <Text style={styles.link}>See all</Text>
+          </Pressable>
         </View>
         <FlatList
           data={featured}
@@ -195,18 +198,20 @@ export default function CustomerHomeScreen() {
 
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Featured categories</Text>
-          <Text
-            style={styles.link}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="View all categories"
             onPress={() => router.push("/(customer)/products/categories")}
           >
-            View all
-          </Text>
+            <Text style={styles.link}>View all</Text>
+          </Pressable>
         </View>
         <View style={styles.chipGrid}>
           {mockCategories.slice(0, 4).map((category) => (
-            <Text
+            <Pressable
               key={category.id}
               style={styles.chip}
+              accessibilityRole="button"
               onPress={() =>
                 router.push({
                   pathname: "/(customer)/products/category/[categoryId]",
@@ -214,25 +219,27 @@ export default function CustomerHomeScreen() {
                 })
               }
             >
-              {category.name}
-            </Text>
+              <Text style={styles.chipText}>{category.name}</Text>
+            </Pressable>
           ))}
         </View>
 
         <View style={styles.sectionHeader}>
           <Text style={styles.sectionTitle}>Featured manufacturers</Text>
-          <Text
-            style={styles.link}
+          <Pressable
+            accessibilityRole="button"
+            accessibilityLabel="View all manufacturers"
             onPress={() => router.push("/(customer)/products/manufacturers")}
           >
-            View all
-          </Text>
+            <Text style={styles.link}>View all</Text>
+          </Pressable>
         </View>
         <View style={styles.chipGrid}>
           {mockManufacturers.slice(0, 4).map((manufacturer) => (
-            <Text
+            <Pressable
               key={manufacturer.id}
               style={styles.chip}
+              accessibilityRole="button"
               onPress={() =>
                 router.push({
                   pathname:
@@ -241,8 +248,8 @@ export default function CustomerHomeScreen() {
                 })
               }
             >
-              {manufacturer.name}
-            </Text>
+              <Text style={styles.chipText}>{manufacturer.name}</Text>
+            </Pressable>
           ))}
         </View>
       </ScrollView>
@@ -324,7 +331,7 @@ const styles = StyleSheet.create({
   noResults: { color: colors.textMuted, paddingVertical: spacing.md },
   heroCard: {
     backgroundColor: colors.primarySoft,
-    borderRadius: 18,
+    borderRadius: 12,
     padding: spacing.xl,
     marginBottom: spacing.xl,
   },
@@ -370,10 +377,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.backgroundAlt,
     borderWidth: 1,
     borderColor: colors.border,
-    borderRadius: 999,
+    borderRadius: 12,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
-    color: colors.text,
     fontWeight: "600",
   },
+  chipText: { color: colors.text, fontWeight: "600" },
 });

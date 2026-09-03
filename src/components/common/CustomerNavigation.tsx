@@ -3,6 +3,7 @@ import { SymbolView } from "expo-symbols";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import colors from "../../constants/colors";
+import { useCart } from "../../providers/CartProvider";
 
 const navigationItems = [
   {
@@ -29,6 +30,11 @@ const navigationItems = [
     },
   },
   {
+    label: "Cart",
+    path: "/(customer)/(tabs)/cart",
+    icon: { ios: "cart.fill", android: "shopping_cart", web: "shopping_cart" },
+  },
+  {
     label: "Account",
     path: "/(customer)/(tabs)/account",
     icon: { ios: "person.fill", android: "person", web: "person" },
@@ -36,6 +42,7 @@ const navigationItems = [
 ] as const;
 
 function getActivePath(pathname: string) {
+  if (pathname.includes("/cart")) return "/(customer)/(tabs)/cart";
   if (pathname.includes("/products")) return "/(customer)/(tabs)/products";
   if (pathname.includes("/orders") || pathname.includes("/order/"))
     return "/(customer)/(tabs)/orders";
@@ -47,6 +54,7 @@ function getActivePath(pathname: string) {
 export default function CustomerNavigation() {
   const pathname = usePathname();
   const insets = useSafeAreaInsets();
+  const { itemCount } = useCart();
   const activePath = getActivePath(pathname);
 
   return (
@@ -69,6 +77,13 @@ export default function CustomerNavigation() {
               tintColor={active ? colors.primary : colors.textMuted}
               size={21}
             />
+            {item.label === "Cart" && itemCount > 0 ? (
+              <View style={styles.badge}>
+                <Text style={styles.badgeText}>
+                  {itemCount > 99 ? "99+" : itemCount}
+                </Text>
+              </View>
+            ) : null}
             <Text style={[styles.label, active && styles.activeLabel]}>
               {item.label}
             </Text>
@@ -93,6 +108,24 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 3,
+    position: "relative",
+  },
+  badge: {
+    position: "absolute",
+    top: 0,
+    marginLeft: 22,
+    minWidth: 16,
+    height: 16,
+    paddingHorizontal: 3,
+    borderRadius: 8,
+    backgroundColor: colors.gold,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeText: {
+    color: colors.white,
+    fontSize: 9,
+    fontWeight: "700",
   },
   label: {
     color: colors.textMuted,

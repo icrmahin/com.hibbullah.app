@@ -1,12 +1,11 @@
-import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import colors from '../../constants/colors';
-import spacing from '../../constants/spacing';
-import typography from '../../constants/typography';
-import type { Order } from '../../types/order';
-import { formatDate } from '../../utils/date';
-import { formatCurrency } from '../../utils/currency';
-import StatusBadge from '../common/StatusBadge';
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import colors from "../../constants/colors";
+import spacing from "../../constants/spacing";
+import typography from "../../constants/typography";
+import type { Order } from "../../types/order";
+import { formatCurrency } from "../../utils/currency";
+import { formatDate } from "../../utils/date";
+import OrderStatus from "./OrderStatus";
 
 type OrderCardProps = {
   order: Order;
@@ -14,20 +13,11 @@ type OrderCardProps = {
 };
 
 export default function OrderCard({ order, onPress }: OrderCardProps) {
-  const tone =
-    order.status === 'DELIVERED'
-      ? 'success'
-      : order.status === 'CANCELLED'
-        ? 'danger'
-        : order.status === 'PENDING'
-          ? 'warning'
-          : 'info';
-
   return (
     <Pressable style={styles.card} onPress={() => onPress?.(order)}>
       <View style={styles.headerRow}>
         <Text style={styles.orderNumber}>{order.orderNumber}</Text>
-        <StatusBadge label={order.status} tone={tone} />
+        <OrderStatus status={order.status} />
       </View>
       <Text style={styles.date}>{formatDate(order.createdAt)}</Text>
       <Text style={styles.items}>{order.items.length} item(s)</Text>
@@ -49,15 +39,15 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
   },
   headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
     gap: spacing.sm,
   },
   orderNumber: {
     color: colors.text,
     fontSize: typography.body,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   date: {
     color: colors.textMuted,
@@ -71,18 +61,18 @@ const styles = StyleSheet.create({
   },
   footer: {
     marginTop: spacing.lg,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   total: {
     color: colors.text,
     fontSize: typography.h3,
-    fontWeight: '700',
+    fontWeight: "700",
   },
   more: {
     color: colors.primary,
     fontSize: typography.bodySmall,
-    fontWeight: '600',
+    fontWeight: "600",
   },
 });

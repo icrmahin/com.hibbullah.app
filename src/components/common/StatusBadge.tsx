@@ -19,7 +19,7 @@ export default function StatusBadge({ label, tone = 'neutral' }: StatusBadgeProp
   }[tone];
 
   return (
-    <View style={[styles.badge, { backgroundColor: palette.background }]}> 
+    <View style={[styles.badge, { backgroundColor: palette.background }]} accessibilityLabel={label}>
       <Text style={[styles.text, { color: palette.text }]}>{label}</Text>
     </View>
   );

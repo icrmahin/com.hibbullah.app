@@ -39,6 +39,7 @@ export default function SearchBar({
         onFocus={onFocus}
         onBlur={onBlur}
         returnKeyType="search"
+        accessibilityLabel="Search products"
         style={styles.input}
       />
       {value ? (
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
   wrapper: {
     flexDirection: "row",
     alignItems: "center",
-    borderRadius: 12,
+    borderRadius: sizes.borderRadius,
     backgroundColor: colors.backgroundAlt,
     borderWidth: 1,
     borderColor: colors.border,
