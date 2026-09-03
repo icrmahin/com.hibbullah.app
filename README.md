@@ -7,7 +7,7 @@ The application is designed for a single-pharmacy business where customers can b
 
 ## Project Status
 
-- [ ] Project setup
+- [x] Project setup
 - [ ] Design system
 - [ ] Customer frontend
 - [ ] Admin frontend
@@ -1396,6 +1396,21 @@ cart_items
 delivery_cycles
 orders
 order_items
+
+## Verified Frontend and Backend Handoff Status
+
+The following foundation is complete and is intended to keep the future backend integration localized:
+
+- [x] Screens are organized under `src/app/`
+- [x] Reusable UI is organized under `src/components/`
+- [x] Shared data types are organized under `src/types/`
+- [x] Customer navigation is owned by the customer layout and works across nested screens
+- [x] Product, cart, order, authentication, and admin operations have service boundaries
+- [x] A centralized Supabase client exists in `src/lib/supabase.ts`
+- [ ] Services are connected to Supabase tables
+- [ ] Database schema, migrations, and indexes are implemented
+- [ ] RLS policies and admin authorization are implemented
+- [ ] Server-side price, stock, expiry, discount, and order validation is implemented
 addresses
 notifications
 returns
@@ -1502,21 +1517,21 @@ Follow this sequence.
 
 ## Phase 1 — Foundation
 
-- [ ] Expo project configured
-- [ ] TypeScript configured
-- [ ] Expo Router configured
-- [ ] Folder structure established
-- [ ] Design constants created
-- [ ] Supabase client prepared
-- [ ] Basic navigation working
+- [x] Expo project configured
+- [x] TypeScript configured
+- [x] Expo Router configured
+- [x] Folder structure established
+- [x] Design constants created
+- [x] Supabase client prepared
+- [x] Basic navigation working
 
 ## Phase 2 — Authentication UI
 
-- [ ] Welcome
-- [ ] Login
-- [ ] Register
-- [ ] Forgot password
-- [ ] Reset password
+- [x] Welcome
+- [x] Login
+- [x] Register
+- [x] Forgot password
+- [x] Reset password
 
 ## Phase 3 — Customer UI
 

@@ -10,12 +10,7 @@ export default function CustomerTabsLayout() {
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textMuted,
         tabBarStyle: {
-          backgroundColor: colors.background,
-          borderTopWidth: 1,
-          borderTopColor: colors.border,
-          height: 72,
-          paddingTop: 8,
-          paddingBottom: 10,
+          display: "none",
         },
         tabBarLabelStyle: { fontSize: 11, fontWeight: "600" },
       }}
