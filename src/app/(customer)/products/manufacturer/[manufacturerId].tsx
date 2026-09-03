@@ -1,6 +1,7 @@
 import { router, useLocalSearchParams } from "expo-router";
 import { useMemo } from "react";
-import { FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../../../components/common/Header";
 import ProductCard from "../../../../components/products/ProductCard";
 import colors from "../../../../constants/colors";

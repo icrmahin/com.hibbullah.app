@@ -1,5 +1,6 @@
 import { router, useLocalSearchParams } from "expo-router";
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AdminHeader from "../../../../components/admin/AdminHeader";
 import Button from "../../../../components/common/Button";
 import StatusBadge from "../../../../components/common/StatusBadge";

@@ -2,12 +2,12 @@ import { router } from "expo-router";
 import { useMemo, useState } from "react";
 import {
   FlatList,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../../components/common/Header";
 import SearchBar from "../../../components/common/SearchBar";
 import ProductCard from "../../../components/products/ProductCard";

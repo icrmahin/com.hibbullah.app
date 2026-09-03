@@ -4,12 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AppLogo from "../../../components/common/AppLogo";
 import ErrorState from "../../../components/common/ErrorState";
 import LoadingState from "../../../components/common/LoadingState";

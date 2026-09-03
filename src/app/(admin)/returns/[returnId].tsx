@@ -1,5 +1,6 @@
 import { useLocalSearchParams } from "expo-router";
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AdminHeader from "../../../components/admin/AdminHeader";
 import colors from "../../../constants/colors";
 import spacing from "../../../constants/spacing";

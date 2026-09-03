@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import { useState } from "react";
-import { SafeAreaView, ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AdminHeader from "../../../components/admin/AdminHeader";
 import Button from "../../../components/common/Button";
 import Input from "../../../components/common/Input";

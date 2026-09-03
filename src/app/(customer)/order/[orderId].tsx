@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { router, useLocalSearchParams } from 'expo-router';
 import Header from '../../../components/common/Header';
 import StatusBadge from '../../../components/common/StatusBadge';
